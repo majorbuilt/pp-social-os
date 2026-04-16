@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pedal Paradise — Social OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1b2e;--navy2:#132338;--navy3:#1a2f47;--navy4:#203752;
+  --teal:#2dd4bf;--teal2:#14b8a6;--teal3:rgba(45,212,191,0.12);
+  --gold:#f5a623;--gold2:#e09010;--gold3:rgba(245,166,35,0.12);
+  --white:#eef4ff;--muted:#6a8aaa;
+  --border:rgba(45,212,191,0.13);--border2:rgba(45,212,191,0.22);
+  --r:14px;--r2:10px;--r3:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{height:100%;overflow:hidden}
+body{background:var(--navy);color:var(--white);font-family:'DM Sans',sans-serif;height:100%;display:flex;flex-direction:column;overflow:hidden}
+
+/* TOP BAR */
+.topbar{background:var(--navy);border-bottom:1px solid var(--border);padding:12px 16px 8px;flex-shrink:0;z-index:10}
+.logo-img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1.5px solid var(--teal);flex-shrink:0}
+.logo-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;letter-spacing:-0.02em}
+.logo .pp{color:var(--teal)}.logo .os{color:var(--gold);font-size:11px;font-weight:700;margin-left:5px;opacity:0.85}
+.timebadge{font-size:11px;color:var(--teal);background:var(--teal3);border:1px solid var(--border2);border-radius:20px;padding:3px 10px}
+.navrow{display:flex;gap:5px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.navrow::-webkit-scrollbar{display:none}
+.ntab{flex-shrink:0;padding:6px 13px;font-size:12px;font-weight:500;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all 0.15s;font-family:'DM Sans',sans-serif}
+.ntab.on{background:var(--teal);border-color:var(--teal);color:var(--navy);font-weight:700}
+
+/* SCROLL AREA */
+.scrollarea{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px}
+
+/* SECTIONS */
+.sec{display:none}.sec.on{display:block}
+
+/* CARDS */
+.card{background:var(--navy2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.card-teal{border-left:3px solid var(--teal);border-radius:0 var(--r) var(--r) 0;padding-left:14px}
+.card-gold{border-left:3px solid var(--gold);border-radius:0 var(--r) var(--r) 0;padding-left:14px}
+
+/* TYPE */
+.lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px}
+.h2{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--white);margin-bottom:6px;line-height:1.3}
+.body{font-size:13px;color:var(--muted);line-height:1.75}
+.body strong,.strong{color:var(--white);font-weight:500}
+.div{border:none;border-top:1px solid var(--border);margin:12px 0}
+.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;margin:2px 2px 0 0;font-weight:600}
+.t-teal{background:var(--teal3);color:var(--teal)}.t-gold{background:var(--gold3);color:var(--gold)}
+.t-ig{background:rgba(225,48,108,0.12);color:#f472b6}.t-fb{background:rgba(24,119,242,0.12);color:#60a5fa}.t-tk{background:rgba(255,255,255,0.06);color:#e2e8f0}
+.t-coral{background:rgba(251,113,133,0.12);color:#fb7185}.t-green{background:rgba(74,222,128,0.12);color:#4ade80}
+
+/* BUTTONS */
+.btn{display:flex;align-items:center;justify-content:center;padding:13px 18px;border-radius:var(--r2);border:1px solid var(--border2);background:transparent;color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;min-height:48px;width:100%;margin-bottom:8px;transition:all 0.15s}
+.btn:active{opacity:0.75;transform:scale(0.97)}
+.btn-teal{background:var(--teal);border-color:var(--teal);color:var(--navy);font-weight:700}
+.btn-gold{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:700}
+.btn-sm{padding:9px 16px;font-size:13px;min-height:40px;width:auto;margin-bottom:0}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+
+/* OPT GRID */
+.opt-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.opt{padding:14px 16px;border:1px solid var(--border2);border-radius:var(--r2);background:var(--navy3);color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;text-align:left;cursor:pointer;min-height:50px;display:flex;align-items:center;transition:all 0.15s}
+.opt:active,.opt.sel{background:rgba(45,212,191,0.1);border-color:var(--teal)}
+.opt.sel{font-weight:600;color:var(--teal)}
+
+/* TEXT AREAS & INPUTS */
+.tinput{background:var(--navy3);border:1px solid var(--border2);border-radius:var(--r2);padding:12px 14px;color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;width:100%;margin-bottom:10px;resize:vertical}
+.tinput:focus{outline:none;border-color:var(--teal)}
+textarea.tinput{min-height:80px;line-height:1.6}
+
+/* OUTPUT BOX */
+.outbox{background:var(--navy3);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:10px;font-size:14px;color:var(--white);line-height:1.8;white-space:pre-line;min-height:70px}
+.outbox.dim{color:var(--muted);font-style:italic;font-size:13px}
+.ctabox{background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.18);border-radius:var(--r2);padding:12px;font-size:12px;color:var(--muted);line-height:1.8;white-space:pre-line;margin-bottom:10px}
+
+/* RESULT BOX */
+.rbox{background:var(--navy3);border:1px solid var(--teal2);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.rbox-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--white);margin-bottom:6px;line-height:1.3}
+.rbox-body{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:10px}
+
+/* STICKERS */
+.sk-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.sk{padding:11px 12px;border:1px solid var(--border2);border-radius:var(--r2);background:var(--navy3);cursor:pointer;text-align:left;min-height:56px;transition:all 0.15s}
+.sk:active,.sk.sel{border-color:var(--teal);background:rgba(45,212,191,0.08)}
+.sk-name{font-size:12px;font-weight:600;color:var(--white);margin-bottom:3px}
+.sk-desc{font-size:11px;color:var(--muted);line-height:1.4}
+
+/* SCHEDULE */
+.wtable{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px}
+.wrow{display:grid;grid-template-columns:52px 1fr 1fr}
+.wrow.hdr .wtd{background:var(--navy3);font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em}
+.wrow:not(.hdr) .wtd{border-top:1px solid var(--border)}
+.wtd{padding:9px 8px;font-size:12px;color:var(--muted);line-height:1.5}
+.wtd.dn{font-weight:700;color:var(--white);font-size:13px}
+
+/* METRICS */
+.m2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.m3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.mc{background:var(--navy3);border-radius:var(--r2);padding:14px;text-align:center;border:1px solid var(--border)}
+.mn{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--teal);line-height:1}
+.mn-gold{color:var(--gold)}
+.ml{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4}
+
+/* BARS */
+.bar-wrap{margin-bottom:12px}
+.bar-lbl{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px}
+.bar-track{height:6px;background:var(--navy3);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:3px;transition:width 0.7s ease}
+
+/* GOAL */
+.gbar-track{height:10px;background:var(--navy3);border-radius:5px;overflow:hidden;margin:8px 0 4px}
+.gbar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--teal));border-radius:5px;transition:width 0.6s}
+
+/* RANGE */
+.range-wrap{margin-bottom:14px}
+.range-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:5px}
+input[type=range]{width:100%;accent-color:var(--teal);cursor:pointer}
+input[type=number]{background:var(--navy3);border:1px solid var(--border2);border-radius:var(--r2);padding:12px 14px;color:var(--white);font-size:15px;font-family:'DM Sans',sans-serif;width:100%;margin-bottom:10px}
+input[type=number]:focus{outline:none;border-color:var(--teal)}
+
+/* INSIGHTS */
+.ins-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.ins-row:last-child{border-bottom:none;padding-bottom:0}
+.ins-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;min-width:32px;background:var(--teal3);color:var(--teal);font-weight:700;font-family:'Syne',sans-serif}
+.ins-t{font-size:13px;color:var(--white);font-weight:500;line-height:1.4;margin-bottom:3px}
+.ins-s{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* SC CARD */
+.sc{border:1px solid var(--border2);border-radius:var(--r);padding:16px;margin-bottom:12px;background:var(--navy2)}
+.sc-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--white);margin-bottom:8px}
+.sc-body{font-size:13px;color:var(--muted);line-height:1.75}
+.sc-tip{background:var(--teal3);border:1px solid var(--border2);border-radius:var(--r3);padding:10px 12px;margin-top:10px;font-size:12px;color:var(--teal);line-height:1.7}
+
+/* WEEK STRIP */
+.wstrip{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:14px}
+.wd{text-align:center}
+.wdname{font-size:10px;color:var(--muted);margin-bottom:4px;font-weight:600}
+.wdcircle{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
+.wdcircle.today{border-color:var(--teal);color:var(--teal);background:var(--teal3)}
+.wdcircle.plan{border-color:rgba(245,166,35,0.35);color:var(--gold)}
+
+/* CHECKLIST */
+.chk-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);cursor:pointer;min-height:46px}
+.chk-item:last-child{border-bottom:none}
+.chkbox{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;min-width:22px;font-size:12px;transition:all 0.15s}
+.chkbox.done{background:var(--teal);border-color:var(--teal);color:var(--navy);font-weight:700}
+.chk-lbl{font-size:13px;color:var(--white);line-height:1.4}
+.chk-lbl.done{color:var(--muted);text-decoration:line-through}
+
+/* HISTORY */
+.hist-item{background:var(--navy3);border:1px solid var(--border);border-radius:var(--r2);padding:12px;margin-bottom:8px}
+.hist-meta{font-size:11px;color:var(--muted);margin-bottom:6px}
+.hist-text{font-size:13px;color:var(--white);line-height:1.7;white-space:pre-line}
+
+/* PIN */
+.pin-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,27,46,0.97);z-index:50;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.pin-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--white);text-align:center}
+.pin-sub{font-size:13px;color:var(--muted);text-align:center}
+.pin-input{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r);padding:14px 20px;color:var(--white);font-size:24px;font-family:'DM Sans',sans-serif;width:160px;text-align:center;letter-spacing:8px}
+.pin-input:focus{outline:none;border-color:var(--teal)}
+.pin-err{font-size:12px;color:#fb7185;min-height:18px;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo-row">
+    <div class="logo"><span class="pp">Pedal Paradise</span><span class="os">SOCIAL OS</span></div>
+    <div class="timebadge" id="tb"></div>
+  </div>
+  <div class="navrow">
+    <button class="ntab on" onclick="gt('postnow',this)">Post Now</button>
+    <button class="ntab" onclick="gt('booking',this)">Booking Reply</button>
+    <button class="ntab" onclick="gt('captions',this)">Captions</button>
+    <button class="ntab" onclick="gt('hashtags',this)">Hashtags</button>
+    <button class="ntab" onclick="gt('bio',this)">Bio</button>
+    <button class="ntab" onclick="gt('schedule',this)">Schedule</button>
+    <button class="ntab" onclick="gt('reach',this)">Reach</button>
+    <button class="ntab" onclick="gt('analytics',this)">Analytics</button>
+    <button class="ntab" onclick="gt('website',this)">Website</button>
+    <button class="ntab" onclick="gt20k(this)">$20K</button>
+  </div>
+</div>
+
+<div class="scrollarea">
+
+<!-- POST NOW -->
+<div id="postnow" class="sec on"><div id="pnTool"></div></div>
+
+<!-- BOOKING CALCULATOR -->
+<div id="booking" class="sec">
+  <div class="lbl">Booking Quote Calculator</div>
+
+  <!-- CUSTOMER NAME -->
+  <div class="card" style="margin-bottom:10px">
+    <div class="lbl">Customer name</div>
+    <input type="text" id="bkCustomerName" class="tinput" placeholder="First name e.g. Sarah" oninput="calcQuote()" style="margin-bottom:0">
+    <div style="font-size:11px;color:var(--muted);margin-top:4px">Adding their name makes the quote feel personal and hospitable — not like a template.</div>
+  </div>
+
+  <!-- STEP 1: TYPE -->
+  <div class="card" style="margin-bottom:10px">
+    <div class="lbl">Customer type</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="opt" id="bkLocal" onclick="setBK('type','local')" style="justify-content:center;text-align:center;flex-direction:column;gap:3px">
+        <div style="font-size:18px">🏠</div>
+        <div style="font-weight:700;font-size:14px">Local</div>
+        <div style="font-size:11px;color:var(--muted)">$45/person</div>
+      </div>
+      <div class="opt" id="bkTourist" onclick="setBK('type','tourist')" style="justify-content:center;text-align:center;flex-direction:column;gap:3px">
+        <div style="font-size:18px">✈️</div>
+        <div style="font-weight:700;font-size:14px">Tourist</div>
+        <div style="font-size:11px;color:var(--muted)">$65–$75/person</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: RIDE TYPE (tourists only) -->
+  <div class="card" id="bkRideTypeCard" style="margin-bottom:10px;display:none">
+    <div class="lbl">Ride type</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="opt" id="bkEvening" onclick="setBK('ridetype','evening')" style="justify-content:center;text-align:center;flex-direction:column;gap:3px">
+        <div style="font-size:18px">🌇</div>
+        <div style="font-weight:700;font-size:13px">Afternoon/Evening</div>
+        <div style="font-size:11px;color:var(--muted)">$65/person · 4PM or 8PM</div>
+      </div>
+      <div class="opt" id="bkMorning" onclick="setBK('ridetype','morning')" style="justify-content:center;text-align:center;flex-direction:column;gap:3px">
+        <div style="font-size:18px">☀️</div>
+        <div style="font-weight:700;font-size:13px">Morning Tour</div>
+        <div style="font-size:11px;color:var(--muted)">$75/person · 11AM start</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: GROUP SIZE -->
+  <div class="card" style="margin-bottom:10px">
+    <div class="lbl">Group size</div>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px">
+      <button onclick="adjGroup(-1)" style="width:48px;height:48px;border-radius:50%;border:1.5px solid var(--border2);background:var(--navy3);color:var(--white);font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">−</button>
+      <div style="flex:1;text-align:center">
+        <div style="font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:var(--teal);line-height:1" id="bkCount">8</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">people</div>
+      </div>
+      <button onclick="adjGroup(1)" style="width:48px;height:48px;border-radius:50%;border:1.5px solid var(--border2);background:var(--navy3);color:var(--white);font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">+</button>
+    </div>
+    <input type="range" min="1" max="16" step="1" value="8" id="bkSlider" oninput="sliderGroup(this.value)" style="width:100%;accent-color:var(--teal)">
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px"><span>1</span><span>7 (flat)</span><span>10–12</span><span>13–14</span><span>16 max</span></div>
+  </div>
+
+  <!-- STEP 4: RIDE DATE -->
+  <div class="card" style="margin-bottom:10px">
+    <div class="lbl">Ride date</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <button onclick="bkCalNav(-1)" style="background:var(--navy3);border:1px solid var(--border2);border-radius:var(--r3);padding:8px 16px;color:var(--white);cursor:pointer;font-size:16px;font-weight:700">‹</button>
+      <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--white)" id="bkCalMonth"></div>
+      <button onclick="bkCalNav(1)" style="background:var(--navy3);border:1px solid var(--border2);border-radius:var(--r3);padding:8px 16px;color:var(--white);cursor:pointer;font-size:16px;font-weight:700">›</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:6px">
+      <div style="text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0">Su</div>
+      <div style="text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0">Mo</div>
+      <div style="text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0">Tu</div>
+      <div style="text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0">We</div>
+      <div style="text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0">Th</div>
+      <div style="text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0">Fr</div>
+      <div style="text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0">Sa</div>
+    </div>
+    <div id="bkCalGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
+    <div id="bkDateDisplay" style="margin-top:12px;background:var(--navy3);border-radius:var(--r2);padding:12px 14px;font-size:13px;color:var(--muted)">No date selected — tap a date above</div>
+    <div id="bkDepositAuto" style="display:none;margin-top:8px;font-size:12px;padding:6px 12px;border-radius:20px;font-weight:600"></div>
+  </div>
+
+  <!-- STEP 5: RIDE TIME -->
+  <div class="card" id="bkTimeCard" style="margin-bottom:10px">
+    <div class="lbl">Ride time preference</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+      <div class="opt" id="bkT4pm" onclick="setBK('time','4pm')" style="justify-content:center;text-align:center;flex-direction:column;gap:2px">
+        <div style="font-weight:700">4 PM</div>
+        <div style="font-size:11px;color:var(--muted)">Afternoon</div>
+      </div>
+      <div class="opt" id="bkT8pm" onclick="setBK('time','8pm')" style="justify-content:center;text-align:center;flex-direction:column;gap:2px">
+        <div style="font-weight:700">8 PM</div>
+        <div style="font-size:11px;color:var(--muted)">Evening</div>
+      </div>
+      <div class="opt" id="bkTcustom" onclick="setBK('time','custom')" style="justify-content:center;text-align:center;flex-direction:column;gap:2px">
+        <div style="font-weight:700">Custom</div>
+        <div style="font-size:11px;color:var(--muted)">Their time</div>
+      </div>
+    </div>
+    <input type="text" class="tinput" id="bkCustomTime" placeholder="e.g. 6:00 PM" style="margin-top:10px;margin-bottom:0;display:none">
+  </div>
+
+  <!-- LIVE QUOTE -->
+  <div class="card card-gold" id="bkQuoteCard" style="margin-bottom:10px;display:none">
+    <div class="lbl">Live quote</div>
+    <div id="bkQuoteDisplay"></div>
+  </div>
+
+  <!-- ADJUSTMENT SECTION -->
+  <div class="card" id="bkAdjCard" style="margin-bottom:10px;display:none">
+    <div class="lbl">Need to adjust the group?</div>
+    <div class="body" style="margin-bottom:10px">Change the group size above — the quote recalculates instantly. Tap Generate Quote for an updated WhatsApp message.</div>
+  </div>
+
+  <!-- GENERATE -->
+  <button class="btn btn-teal" onclick="genBookingQuote()">Generate WhatsApp Quote ↗</button>
+  <div class="outbox dim" id="bkOut">Your quote message will appear here. Fill in the details above first.</div>
+  <div class="btn-row">
+    <button class="btn btn-gold btn-sm" onclick="copyBkOut()">Copy message</button>
+    <button class="btn btn-sm" onclick="resetBooking()">Reset</button>
+  </div>
+</div>
+
+<!-- CAPTIONS -->
+<div id="captions" class="sec">
+  <div class="lbl">Caption Generator</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+    <div class="opt" id="cDay" onclick="setCType('dayphoto')" style="justify-content:center;text-align:center">☀️ Day photo</div>
+    <div class="opt" id="cNight" onclick="setCType('nightphoto')" style="justify-content:center;text-align:center">🌙 Night photo</div>
+    <div class="opt" id="cDayVid" onclick="setCType('dayvid')" style="justify-content:center;text-align:center">☀️ Day video</div>
+    <div class="opt" id="cNightVid" onclick="setCType('nightvid')" style="justify-content:center;text-align:center">🌙 Night video</div>
+    <div class="opt" id="cLive" onclick="setCType('live')" style="grid-column:1/-1;justify-content:center;text-align:center">⚡ Live moment</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+    <div class="opt" id="cpIG" onclick="setCPlat('instagram')" style="justify-content:center;text-align:center">📸 Instagram</div>
+    <div class="opt" id="cpTK" onclick="setCPlat('tiktok')" style="justify-content:center;text-align:center">🎵 TikTok</div>
+  </div>
+  <button class="btn btn-teal" onclick="genCaption()">Generate Caption ↗</button>
+  <div class="outbox dim" id="capOut">Select content type and platform above, then hit Generate.</div>
+  <div class="ctabox" id="ctaDisp">📲 Book via WhatsApp or call us&#10;🌐 PedalParadiseAdventures.com&#10;🎟 Weekend rides available — spots fill fast!</div>
+  <div class="btn-row">
+    <button class="btn btn-gold btn-sm" onclick="saveCaption()" id="saveCBtn">Save to history</button>
+    <button class="btn btn-sm" onclick="copyCapCTA()">Copy caption + CTA</button>
+  </div>
+
+  <div class="div"></div>
+  <div class="lbl">Caption history <span style="font-size:11px;color:var(--muted);font-weight:400;font-style:italic;text-transform:none">(last 10)</span></div>
+  <div id="capHistory"><div class="body" style="padding:8px 0">No captions saved yet. Generate one above and tap Save.</div></div>
+</div>
+
+<!-- HASHTAGS -->
+<div id="hashtags" class="sec">
+  <div class="lbl">Hashtag Generator</div>
+  <div class="card card-teal" style="margin-bottom:14px">
+    <div class="body">Describe your post briefly and select the platform. Gets you the best-performing hashtags for party bike / nightlife / Nassau content right now.</div>
+  </div>
+  <textarea class="tinput" id="hashDesc" placeholder="e.g. Group of 12 celebrating a birthday, Saturday night ride, everyone singing karaoke..." style="min-height:90px"></textarea>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+    <div class="opt" id="hIG" onclick="setHPlat('instagram')" style="justify-content:center;text-align:center">📸 Instagram</div>
+    <div class="opt" id="hTK" onclick="setHPlat('tiktok')" style="justify-content:center;text-align:center">🎵 TikTok</div>
+  </div>
+  <button class="btn btn-teal" onclick="genHashtags()">Generate Hashtags ↗</button>
+  <div class="outbox dim" id="hashOut">Your hashtags will appear here.</div>
+  <div class="btn-row">
+    <button class="btn btn-sm" onclick="copyText('hashOut')">Copy hashtags</button>
+  </div>
+</div>
+
+<!-- BIO -->
+<div id="bio" class="sec">
+  <div class="lbl">Bio Optimizer</div>
+  <div class="card card-teal" style="margin-bottom:14px">
+    <div class="body">Your current bio is solid but we can sharpen it to convert more visitors into bookings. Paste it below and select the platform.</div>
+  </div>
+  <div class="lbl">Current bio</div>
+  <textarea class="tinput" id="bioInput" style="min-height:120px">Your Ultimate Mobile Bar Tour
+Nassau's No.1 Pedal Party Experience
+Bring your vibes, we'll bring the ride!
+📧 DM | 📞 242-677-BIKE | 📱 242-552-4199</textarea>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+    <div class="opt" id="bpIG" onclick="setBPlat('instagram')" style="justify-content:center;text-align:center;font-size:12px">Instagram</div>
+    <div class="opt" id="bpTK" onclick="setBPlat('tiktok')" style="justify-content:center;text-align:center;font-size:12px">TikTok</div>
+    <div class="opt" id="bpFB" onclick="setBPlat('facebook')" style="justify-content:center;text-align:center;font-size:12px">Facebook</div>
+  </div>
+  <button class="btn btn-teal" onclick="genBio()">Optimize Bio ↗</button>
+  <div class="outbox dim" id="bioOut">Your optimized bio will appear here.</div>
+  <div class="btn-row">
+    <button class="btn btn-sm" onclick="copyText('bioOut')">Copy bio</button>
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<div id="schedule" class="sec">
+  <div class="lbl">Weekly posting rhythm</div>
+  <div class="wstrip" id="wstrip"></div>
+  <div class="wtable">
+    <div class="wrow hdr"><div class="wtd">Day</div><div class="wtd">Instagram</div><div class="wtd">FB + TikTok</div></div>
+    <div class="wrow"><div class="wtd dn">Mon</div><div class="wtd">Feed photo<br><span class="tag t-gold">daytime</span><span class="tag t-teal">or night</span></div><div class="wtd">Cross-post both</div></div>
+    <div class="wrow"><div class="wtd dn">Tue</div><div class="wtd">Story only<br><span class="tag t-coral">all 3</span></div><div class="wtd">FB + TikTok Story</div></div>
+    <div class="wrow"><div class="wtd dn">Wed</div><div class="wtd">Reel / video<br><span class="tag t-teal">video first</span><span class="tag t-coral">boost if pops</span></div><div class="wtd">FB share + TikTok</div></div>
+    <div class="wrow"><div class="wtd dn">Thu</div><div class="wtd">Story only<br><span class="tag t-coral">all 3</span></div><div class="wtd">FB + TikTok Story</div></div>
+    <div class="wrow"><div class="wtd dn">Fri</div><div class="wtd">Feed post<br><span class="tag t-teal">night best</span><span class="tag t-coral">boost 2x/mo</span></div><div class="wtd">Cross-post + FB Event</div></div>
+    <div class="wrow"><div class="wtd dn">Sat</div><div class="wtd">Live Story + clip<br><span class="tag t-green">real-time</span></div><div class="wtd">All 3 Stories + TikTok</div></div>
+    <div class="wrow"><div class="wtd dn">Sun</div><div class="wtd">Recap photo</div><div class="wtd">Cross-post same</div></div>
+  </div>
+  <div class="card card-gold">
+    <div class="lbl">Best times</div>
+    <div class="body"><span class="strong">IG/FB:</span> Mon/Wed/Fri 11AM–1PM · Sat during ride · Sun 4–6PM<br><span class="strong">TikTok:</span> Wed/Fri 7–9PM · Sat live · Evenings beat mornings</div>
+  </div>
+  <div class="card">
+    <div class="lbl">Sunday prep — check these off</div>
+    <div class="body" style="margin-bottom:10px;font-size:12px">Every Sunday, spend 10 minutes picking your posts for the week. Write captions using the Captions tab. Schedule Monday and Wednesday in Meta Business Suite so they post automatically. You never wake up Monday wondering what to post — it's already done.</div>
+    <div id="prepList"></div>
+  </div>
+</div>
+
+<!-- REACH -->
+<div id="reach" class="sec">
+  <div class="lbl">Reach & growth projector</div>
+  <div class="card">
+    <div class="range-wrap"><div class="range-lbl"><span>Current followers</span><span id="fv" style="color:var(--teal);font-weight:600">2,268</span></div><input type="range" min="100" max="10000" step="50" value="2268" id="fs" oninput="updR()"></div>
+    <div class="range-wrap"><div class="range-lbl"><span>Posts per week</span><span id="pv" style="color:var(--teal);font-weight:600">5</span></div><input type="range" min="1" max="14" step="1" value="5" id="ps" oninput="updR()"></div>
+    <div class="range-wrap" style="margin-bottom:0"><div class="range-lbl"><span>Monthly ad spend</span><span id="av" style="color:var(--gold);font-weight:600">$100</span></div><input type="range" min="0" max="500" step="25" value="100" id="as" oninput="updR()"></div>
+  </div>
+  <div class="m3">
+    <div class="mc"><div class="mn" id="pr1">—</div><div class="ml">Reach per post</div></div>
+    <div class="mc"><div class="mn" id="pr2">—</div><div class="ml">New followers/mo</div></div>
+    <div class="mc"><div class="mn mn-gold" id="pr3">—</div><div class="ml">Paid reach/mo</div></div>
+  </div>
+  <div class="card">
+    <div class="bar-wrap"><div class="bar-lbl"><span>Today: <span id="curF" style="color:var(--teal)">2,268</span></span><span id="p30" style="color:var(--teal)">30d</span></div><div class="bar-track"><div class="bar-fill" id="b1" style="width:33%"></div></div></div>
+    <div class="bar-wrap"><div class="bar-lbl"><span>Today</span><span id="p60" style="color:var(--teal)">60d</span></div><div class="bar-track"><div class="bar-fill" id="b2" style="width:66%"></div></div></div>
+    <div class="bar-wrap" style="margin-bottom:0"><div class="bar-lbl"><span>Today</span><span id="p90" style="color:var(--gold)">90d</span></div><div class="bar-track"><div class="bar-fill" id="b3" style="width:100%"></div></div></div>
+  </div>
+  <div class="card card-teal">
+    <div class="lbl">What to expect</div>
+    <div class="ins-row"><div class="ins-icon">1–2</div><div><div class="ins-t">Weeks 1–2: Foundation</div><div class="ins-s">Algorithm learns your account. Post anyway — this is groundwork.</div></div></div>
+    <div class="ins-row"><div class="ins-icon">3–4</div><div><div class="ins-t">Weeks 3–4: First signals</div><div class="ins-s">Reels reach beyond followers. Stories get more taps. First organic booking DMs.</div></div></div>
+    <div class="ins-row"><div class="ins-icon">M2</div><div><div class="ins-t">Month 2: Compounding begins</div><div class="ins-s">Past posts keep getting discovered. Boosted posts return real bookings.</div></div></div>
+    <div class="ins-row"><div class="ins-icon">M3</div><div><div class="ins-t">Month 3+: Momentum</div><div class="ins-s">90 days consistent puts you ahead of 90% of local businesses.</div></div></div>
+  </div>
+  <div class="m2">
+    <div class="mc"><div class="mn">15–25%</div><div class="ml">Organic reach per post (under 10K followers)</div></div>
+    <div class="mc"><div class="mn">4–7%</div><div class="ml">Reel engagement rate benchmark</div></div>
+    <div class="mc"><div class="mn">5%+</div><div class="ml">Healthy monthly follower growth</div></div>
+    <div class="mc"><div class="mn">2–5x</div><div class="ml">Reels reach vs static photos</div></div>
+  </div>
+</div>
+
+<!-- ANALYTICS -->
+<div id="analytics" class="sec">
+  <div class="lbl">Sunday check-in — what to look at</div>
+  <div class="sc"><div class="sc-title">Reach & Impressions</div><div class="sc-body"><span class="strong" style="color:var(--white)">Where:</span> Tap any post → View Insights → Reach<br><br>Reach = unique people who saw it. If impressions are much higher than reach, the same people keep seeing it. You need more Reels to find new people.</div><div class="sc-tip">Reach dropping → post more Reels, they reach non-followers<br>Reach growing → keep doing exactly this</div></div>
+  <div class="sc"><div class="sc-title">Profile Visits & Follows</div><div class="sc-body"><span class="strong" style="color:var(--white)">Where:</span> Instagram Insights → Overview → Profile Visits<br><br>High visits but low follows = your page isn't converting. Check your bio and pinned posts.</div><div class="sc-tip">High visits, low follows → fix bio. Add booking link clearly<br>Low visits → content isn't making people curious enough. Try more behind-the-scenes</div></div>
+  <div class="sc"><div class="sc-title">Saves & Shares</div><div class="sc-body"><span class="strong" style="color:var(--white)">Where:</span> Post Insights → Saves / Shares<br><br>Saves = booking intent. Shares = free word of mouth. The algorithm heavily weights both.</div><div class="sc-tip">High saves → this is your boost candidate. Put $50 behind it<br>Zero saves/shares → don't boost. Find a better performing post</div></div>
+  <div class="sc"><div class="sc-title">Story Exits</div><div class="sc-body"><span class="strong" style="color:var(--white)">Where:</span> Story Insights → Navigation → Exits<br><br>High exits = people left before it ended. Your first frame wasn't strong enough.</div><div class="sc-tip">High exits → open with the most exciting moment in frame 1<br>High taps back → people rewatched. Make more content like this</div></div>
+  <div class="sc"><div class="sc-title">Best post of the week</div><div class="sc-body">Every Sunday find your single best post from the past 7 days. Write down what made it work. Replicate that formula next week.</div><div class="sc-tip">High saves + reach → boost it Monday with $50<br>Low everything → wrong content type for that slot. Switch it up</div></div>
+</div>
+
+<!-- WEBSITE -->
+<div id="website" class="sec">
+  <div class="lbl">Get more traction on your website</div>
+  <div class="sc"><div class="sc-title">1. Booking link everywhere</div><div class="sc-body">Your WhatsApp link must be visible within 3 seconds of landing — no scrolling required. Also in every bio on every platform.</div><div class="sc-tip">IG bio: "🚴 Party bike rides in Nassau · Book via link 👇"<br>TikTok + FB: same link in bio</div></div>
+  <div class="sc"><div class="sc-title">2. Google My Business — free</div><div class="sc-body">Go to business.google.com and claim your Pedal Paradise listing. Tourists search "things to do in Nassau" on Google Maps. This puts you right there for free.</div><div class="sc-tip">After every ride → WhatsApp guests asking for a Google review. One 5-star review beats 10 Instagram followers for bookings.</div></div>
+  <div class="sc"><div class="sc-title">3. TikTok as a search engine</div><div class="sc-body">People search TikTok like Google now. Write captions like search answers: "Best group activity Nassau Bahamas" — not just vibes. Say "Nassau" out loud in your videos.</div><div class="sc-tip">Add website to TikTok bio · Nassau, Bahamas location tag every video · Say "Nassau" in the first 3 seconds</div></div>
+  <div class="sc"><div class="sc-title">4. Tripadvisor listing</div><div class="sc-body">Tourists plan Bahamas trips weeks ahead on Tripadvisor. List Pedal Paradise as an experience. These are high-intent visitors actively planning an activity.</div><div class="sc-tip">Free to list, 20 minutes to set up · Also consider Airbnb Experiences for cruise tourists</div></div>
+  <div class="sc"><div class="sc-title">5. Mobile page speed</div><div class="sc-body">Most traffic comes from phones. Slow site = people leave before booking. Test at pagespeed.web.dev — free, shows exactly what to fix.</div><div class="sc-tip">Goal: loads in under 3 seconds on mobile · "Book Now" button must be the first thing visitors see</div></div>
+</div>
+
+<!-- $20K (PIN PROTECTED) -->
+<div id="goal20k" class="sec">
+  <div class="lbl">Second bike fund — $20,000</div>
+  <div class="card">
+    <div class="lbl" style="margin-bottom:6px">How much saved so far?</div>
+    <input type="number" id="savedAmt" placeholder="e.g. 2500" oninput="updGoal()" min="0" max="20000">
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span id="gPct">0% saved</span><span style="color:var(--gold)">$20,000 goal</span></div>
+    <div class="gbar-track"><div class="gbar-fill" id="gbar" style="width:0%"></div></div>
+    <div class="body" id="gMsg" style="margin-top:8px"></div>
+  </div>
+  <div class="m2">
+    <div class="mc"><div class="mn mn-gold">$1,667</div><div class="ml">per month → 12 months</div></div>
+    <div class="mc"><div class="mn">$2,500</div><div class="ml">per month → 8 months</div></div>
+  </div>
+  <div class="card card-gold">
+    <div class="lbl">How social media builds this fund</div>
+    <div class="ins-row"><div class="ins-icon" style="background:var(--gold3);color:var(--gold)">$</div><div><div class="ins-t">Consistent posting = consistent bookings</div><div class="ins-s">Every post keeps Pedal Paradise in people's minds when planning an occasion.</div></div></div>
+    <div class="ins-row"><div class="ins-icon" style="background:var(--gold3);color:var(--gold)">↑</div><div><div class="ins-t">Boosted posts in peak season</div><div class="ins-s">A $50 boost filling 4–6 extra seats returns 10x spend in one weekend.</div></div></div>
+    <div class="ins-row"><div class="ins-icon" style="background:var(--gold3);color:var(--gold)">∞</div><div><div class="ins-t">TikTok = free reach</div><div class="ins-s">One viral Saturday clip can beat a whole month of paid ads.</div></div></div>
+    <div class="ins-row"><div class="ins-icon" style="background:var(--gold3);color:var(--gold)">⬇</div><div><div class="ins-t">Slow season → save the ad budget</div><div class="ins-s">Drop ads to $0 slow months. Add that $100 directly to the bike fund.</div></div></div>
+  </div>
+</div>
+
+</div><!-- end scrollarea -->
+
+<!-- PIN OVERLAY -->
+<div class="pin-overlay" id="pinOverlay" style="display:none">
+  <div class="pin-title">🔒 Private Section</div>
+  <div class="pin-sub">Enter your PIN to access the $20K Goal Tracker</div>
+  <input type="password" class="pin-input" id="pinInput" maxlength="4" inputmode="numeric" placeholder="••••" oninput="checkPin()">
+  <div class="pin-err" id="pinErr"></div>
+  <button class="btn btn-sm" style="width:auto;padding:10px 24px;margin-top:4px" onclick="closePin()">Cancel</button>
+</div>
+
+<script>
+// ── CONFIG ──
+const API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your Anthropic API key
+const CTA = '📲 Book via WhatsApp or call us\n🌐 PedalParadiseAdventures.com\n🎟 Weekend rides available — spots fill fast!';
+const PIN = '2268'; // Change this to your preferred PIN
+
+// ── TIME ──
+function getTOD(){const h=new Date().getHours();return h<12?'morning':h<17?'afternoon':h<21?'evening':'night';}
+function getDay(){return['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()];}
+const todLbl={morning:'Morning ☀️',afternoon:'Afternoon 🌤',evening:'Evening 🌇',night:'Night 🌙'};
+function updBadge(){const el=document.getElementById('tb');if(el)el.textContent=getDay()+' · '+todLbl[getTOD()];}
+updBadge();setInterval(updBadge,60000);
+
+// ── API CALL ──
+async function callClaude(prompt, maxTokens=350){
+  const res = await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01'},
+    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
+  });
+  const data = await res.json();
+  if(data.error) throw new Error(data.error.message);
+  return data.content?.find(b=>b.type==='text')?.text?.trim()||'No response — try again.';
+}
+
+function setLoading(id, msg='Generating...'){
+  const el=document.getElementById(id);
+  if(el){el.textContent=msg;el.className='outbox dim';}
+}
+
+function setOutput(id, text){
+  const el=document.getElementById(id);
+  if(el){el.textContent=text;el.className='outbox';}
+}
+
+function copyText(id){
+  const el=document.getElementById(id);
+  if(!el||el.classList.contains('dim'))return;
+  navigator.clipboard.writeText(el.textContent).then(()=>{
+    const origText=el.textContent;
+    // find copy btn nearby
+  }).catch(()=>{alert(el.textContent);});
+}
+
+// ── TAB NAV ──
+function gt(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  if(btn){btn.classList.add('on');btn.scrollIntoView({inline:'center',behavior:'smooth'});}
+  document.querySelector('.scrollarea').scrollTop=0;
+}
+
+function gt20k(btn){
+  document.getElementById('pinOverlay').style.display='flex';
+  document.getElementById('pinInput').value='';
+  document.getElementById('pinErr').textContent='';
+  setTimeout(()=>document.getElementById('pinInput').focus(),100);
+  window._pinBtn=btn;
+}
+
+function checkPin(){
+  const val=document.getElementById('pinInput').value;
+  if(val.length===4){
+    if(val===PIN){
+      document.getElementById('pinOverlay').style.display='none';
+      gt('goal20k',window._pinBtn);
+    } else {
+      document.getElementById('pinErr').textContent='Incorrect PIN. Try again.';
+      document.getElementById('pinInput').value='';
+    }
+  }
+}
+
+function closePin(){
+  document.getElementById('pinOverlay').style.display='none';
+}
+
+// ── POST NOW ──
+// Each rule has: t=platform type, h=headline, b=body advice, tip=timing tip
+const RULES={
+  dayphoto:{
+    morning:{t:'feed',h:'Post to your feed — all platforms',b:'Morning is a solid window. Feed post now reaches people before their day gets busy.',tip:'✓ Post now — 9AM–12PM is strong for feed reach'},
+    afternoon:{t:'feed',h:'Post to your feed — all platforms',b:'Afternoon is one of the strongest engagement windows for Instagram and Facebook.',tip:'✓ Post now — 12PM–5PM is peak feed engagement'},
+    evening:{t:'story',h:'Save for feed tomorrow — Story tonight',b:'Evening is prime Story time, not feed time. Push to all 3 Stories now and save this photo for a feed post tomorrow morning at 11AM.',tip:'⏰ Best move: Story now + schedule feed post for tomorrow 11AM'},
+    night:{t:'story',h:'Story tonight — schedule feed for tomorrow',b:'Late night feed posts get buried. Post as a Story now, then schedule this as a feed post for tomorrow morning.',tip:'⏰ Best move: Story now + post to feed tomorrow morning'}
+  },
+  nightphoto:{
+    morning:{t:'feed',h:'Post to your feed — all platforms',b:'Night photo in the morning reminds people of the weekend energy. Works well any day.',tip:'✓ Post now — morning feed posts perform consistently'},
+    afternoon:{t:'feed',h:'Post to your feed — all platforms',b:'Afternoon is strong for feed engagement. Nighttime content works any time of day.',tip:'✓ Post now — good engagement window'},
+    evening:{t:'feed',h:'Post to your feed — perfect timing',b:'Evening + nighttime photo is the best combo. People are heading out and in that energy.',tip:'✓ Post now — evening + night content = peak match'},
+    night:{t:'feed',h:'Post to your feed right now',b:'Nighttime photo posted at night while the vibe is still fresh hits harder.',tip:'✓ Post now — night content + night timing = authentic'}
+  },
+  dayvid:{
+    morning:{t:'reel',h:'Post as a Reel — all platforms',b:'Morning Reels reach people before their day gets busy. Good window for discovery.',tip:'✓ Post now — Reels perform well all day'},
+    afternoon:{t:'reel',h:'Post as a Reel — all platforms',b:'Afternoon is a strong window for Reels. Instagram pushes them hardest between 12–6PM.',tip:'✓ Post now — 12PM–5PM is the strongest Reel window'},
+    evening:{t:'reel',h:'Post as a Reel — prime time',b:'Evening is peak scrolling. A Reel going out now gets maximum eyes on Instagram and TikTok.',tip:'✓ Post now — best time of day for Reel reach'},
+    night:{t:'story',h:'Story now — repost as Reel at 11AM tomorrow',b:'Late night feed and Reel posts underperform. Push this to all 3 Stories now for tonight, then repost as a Reel tomorrow morning at 11AM.',tip:'⏰ Best move: Story now + schedule Reel for tomorrow 11AM'}
+  },
+  nightvid:{
+    morning:{t:'reel',h:'Post as a Reel — all platforms',b:'Night video posted in the morning still performs — the content is the hook, not the time.',tip:'✓ Post now — video content drives reach any time'},
+    afternoon:{t:'reel',h:'Post as a Reel — all platforms',b:'Afternoon nighttime Reel works great as a teaser for the upcoming ride.',tip:'✓ Post now — afternoon is a strong Reel window'},
+    evening:{t:'reel',h:'Post as a Reel — best possible timing',b:'Evening + night video is your most powerful combination. Post it everywhere right now.',tip:'✓ Post now — this is the ideal time for this content'},
+    night:{t:'reel',h:'Post it right now — all platforms',b:'Night video going out at night while the energy is still there is as authentic as it gets.',tip:'✓ Post now + add to all 3 Stories simultaneously'}
+  },
+  live:{
+    morning:{t:'story',h:'Post to all 3 Stories right now',b:'Live moment in the morning — push it straight to Stories. Raw and real is what Stories are for.',tip:'✓ Post now — live content is always timely'},
+    afternoon:{t:'story',h:'Post to all 3 Stories right now',b:'Live afternoon moment goes straight to Stories. Pick one sticker and post.',tip:'✓ Post now — afternoon Stories get good views'},
+    evening:{t:'story',h:'All 3 Stories right now — prime Story time',b:'Evening Stories get the most views of any time of day. Push this to all 3 platforms immediately.',tip:'✓ Post now — evening is the best Story window all week'},
+    night:{t:'story',h:'Post to all 3 Stories right now',b:'Night live content is your most authentic material. All 3 Stories right now while it\'s happening.',tip:'✓ Post now — live night content is your best performing Story type'}
+  }
+};
+const PLATMAP={feed:{ig:'Instagram feed',fb:'Facebook feed',tk:'TikTok post'},reel:{ig:'Instagram Reel',fb:'Facebook video',tk:'TikTok'},story:{ig:'Instagram Story',fb:'Facebook Story',tk:'TikTok Story'}};
+const STICKERS=[
+  {id:'link',nm:'Link sticker',ds:'Tap to book → WhatsApp',ov:'Tap below to grab your spot 👇',su:'Link sticker → set to WhatsApp booking link',nt:'IG + FB: Link sticker. TikTok: "Link in bio" text overlay.'},
+  {id:'poll',nm:'Poll sticker',ds:'Drive taps + algorithm signal',ov:'Would you ride with your crew?',su:'Poll → "100% yes" vs "Already booked 🙋"',nt:'Works natively on all 3 platforms.'},
+  {id:'countdown',nm:'Countdown',ds:"Tonight's ride — urgency",ov:'Spots going fast —',su:'Countdown → label "4 PM Ride" or "8 PM Tonight"',nt:'IG: subscribers get notified. FB+TikTok: bold text "Tonight 4 PM & 8 PM — DM to book."'},
+  {id:'question',nm:'Question sticker',ds:'What are you celebrating?',ov:'What are you celebrating? Drop it below 👇',su:'Question sticker — people reply with their occasion',nt:'IG + FB natively. TikTok: "Drop your occasion in comments."'}
+];
+
+let pnS1=null,pnTOD=getTOD(),pnSt=null,pnCap=null,pnLoading=false;
+
+function renderPN(){
+  const el=document.getElementById('pnTool');if(!el)return;
+  if(!pnS1){
+    el.innerHTML=`<div class="lbl">What do you have to post?</div>
+    <div class="opt-grid">
+      <div class="opt" onclick="pnPick('dayphoto')">☀️ Daytime photo</div>
+      <div class="opt" onclick="pnPick('nightphoto')">🌙 Nighttime photo</div>
+      <div class="opt" onclick="pnPick('dayvid')">☀️ Daytime video / clip</div>
+      <div class="opt" onclick="pnPick('nightvid')">🌙 Nighttime video / clip</div>
+      <div class="opt" style="grid-column:1/-1" onclick="pnPick('live')">⚡ Something happening right now — live moment</div>
+    </div>`;return;
+  }
+  const r=RULES[pnS1][pnTOD];
+  const pl=PLATMAP[r.t];
+  const isStory=r.t==='story';
+  const sk=pnSt?STICKERS.find(x=>x.id===pnSt):null;
+
+  let stHTML='';
+  if(isStory){
+    stHTML=`<div class="div"></div><div class="lbl">Add one action sticker</div>
+    <div class="sk-grid">${STICKERS.map(s=>`<div class="sk${pnSt===s.id?' sel':''}" onclick="pnSt2('${s.id}')"><div class="sk-name">${s.nm}</div><div class="sk-desc">${s.ds}</div></div>`).join('')}</div>
+    ${sk?`<div style="background:var(--navy3);border:1px solid var(--teal2);border-radius:var(--r);padding:14px;margin-bottom:12px">
+      <div class="lbl" style="margin-bottom:6px">Text overlay</div>
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:10px;padding:10px;background:var(--teal3);border-radius:var(--r3);border-left:3px solid var(--teal)">"${sk.ov}"</div>
+      <div class="lbl" style="margin-bottom:4px">Sticker setup</div>
+      <div style="font-size:13px;color:var(--teal);margin-bottom:8px">${sk.su}</div>
+      <div style="font-size:12px;color:var(--muted);padding-top:8px;border-top:1px solid var(--border)">${sk.nt}</div>
+    </div>`:'<div class="body" style="margin-bottom:12px">Pick one sticker — only ever one per Story.</div>'}`;
+  }
+
+  el.innerHTML=`<div style="display:inline-block;background:var(--teal3);border:1px solid var(--border2);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--teal);margin-bottom:12px">${getDay()} · ${todLbl[pnTOD]}</div>
+  <div class="rbox">
+    <div class="rbox-title">${r.h}</div>
+    <div class="rbox-body">${r.b}</div>
+    <div style="background:rgba(45,212,191,0.07);border-radius:var(--r3);padding:8px 10px;margin-top:8px;margin-bottom:8px;font-size:12px;color:var(--teal);font-weight:500">${r.tip}</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="tag t-ig">${pl.ig}</span>
+      <span class="tag t-fb">${pl.fb}</span>
+      <span class="tag t-tk">${pl.tk}</span>
+    </div>
+  </div>
+  ${stHTML}
+  <div class="div"></div>
+  <div class="lbl">Caption</div>
+  <div class="${pnCap?'outbox':'outbox dim'}" id="pnCapOut">${pnCap||'Hit Generate for a fresh caption for this exact moment.'}</div>
+  <div class="ctabox">${CTA}</div>
+  <button class="btn btn-teal" id="pnGenBtn" onclick="pnGenCap()">Generate caption ↗</button>
+  ${pnCap?'<button class="btn btn-gold" onclick="pnCopyCap()">Copy caption + CTA</button>':''}
+  <button class="btn" onclick="pnReset()">← Start over</button>`;
+}
+
+async function pnGenCap(){
+  if(pnLoading)return;pnLoading=true;
+  const btn=document.getElementById('pnGenBtn');if(btn){btn.disabled=true;btn.textContent='Writing...';}
+  const out=document.getElementById('pnCapOut');if(out){out.textContent='Writing your caption...';out.className='outbox dim';}
+  const isStory=RULES[pnS1][pnTOD].t==='story';
+  const isNight=pnS1==='nightphoto'||pnS1==='nightvid'||(pnS1==='live'&&(pnTOD==='evening'||pnTOD==='night'));
+  const isVideo=pnS1.includes('vid')||pnS1==='live';
+  try{
+    pnCap=await callClaude(`You write social media captions for Pedal Paradise Adventures — Nassau, Bahamas party bike (@pedalparadisebahamas).
+
+Style reference: Nashville Pedal Tavern says "Grab your crew and pedal with us!" Nashville Bar Bike says "The best way to party and tour downtown." — Short. Direct. Real person energy. Occasion-focused.
+
+Content: ${pnS1==='live'?'Live moment on the bike right now':isVideo?'Video of guests on the party bike':'Photo of guests on the party bike'}
+Vibe: ${isNight?'Night ride — Nassau lit up, party energy, music going':'Day ride — Nassau sunshine, good group energy'}
+Format: ${isStory?'1 punchy sentence max — no hashtags (Story format)':'2 short punchy sentences + 3-4 hashtags on new line (Feed format)'}
+
+Rules — all mandatory:
+- Occasion when natural: birthday crew, bachelorette, work outing, group of friends
+- Nassau or Bahamas once naturally — never forced
+- Casual local Nassau business owner tone
+- Zero marketing language, zero adjective lists, zero em dashes
+- 1 emoji max, never to open a sentence
+- NEVER start with: "Are you ready" / "Looking for fun" / "Picture this" / "Nassau is calling" / "Imagine" / "Step aboard"
+- NO booking CTA — added separately
+- Return ONLY the caption`,220);
+  }catch(e){pnCap='Network error — check your internet and try again.';}
+  pnLoading=false;renderPN();
+}
+
+function pnCopyCap(){
+  if(!pnCap)return;
+  navigator.clipboard.writeText(pnCap+'\n\n'+CTA).catch(()=>alert(pnCap+'\n\n'+CTA));
+}
+
+function pnPick(v){pnS1=v;pnTOD=getTOD();pnCap=null;pnSt=null;renderPN();}
+function pnSt2(v){pnSt=v;renderPN();}
+function pnReset(){pnS1=null;pnSt=null;pnCap=null;renderPN();}
+renderPN();
+
+// ── BOOKING CALCULATOR ──
+const bk={type:null,ridetype:null,count:8,time:null,when:null,selectedDate:null};
+
+// ── BOOKING CALENDAR ──
+let bkCalYear=new Date().getFullYear(),bkCalMonth=new Date().getMonth();
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS_LONG=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+function buildBkCal(){
+  const el=document.getElementById('bkCalGrid');
+  const ml=document.getElementById('bkCalMonth');
+  if(!ml||!el)return;
+  ml.textContent=MONTHS[bkCalMonth]+' '+bkCalYear;
+  const firstDay=new Date(bkCalYear,bkCalMonth,1).getDay();
+  const daysInMonth=new Date(bkCalYear,bkCalMonth+1,0).getDate();
+  const todayStr=today();
+  const pipeline=ls('pp_pipeline')||[];
+  const bookings=ls('pp_bookings')||[];
+  const bookedDates=new Set([...pipeline.map(p=>p.date),...bookings.map(b=>b.date)].filter(Boolean));
+  let cells=[];
+  // Empty cells before first day
+  for(let i=0;i<firstDay;i++){
+    cells.push('<div style="aspect-ratio:1"></div>');
+  }
+  for(let d=1;d<=daysInMonth;d++){
+    const ds=`${bkCalYear}-${String(bkCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isPast=ds<todayStr;
+    const isSelected=ds===bk.selectedDate;
+    const isBooked=bookedDates.has(ds);
+    const isToday=ds===todayStr;
+    let bg,color,border,fw,cursor;
+    if(isSelected){bg='var(--teal)';color='var(--navy)';border='var(--teal)';fw='700';cursor='pointer';}
+    else if(isBooked&&!isPast){bg='rgba(251,113,133,0.18)';color='#fb7185';border='rgba(251,113,133,0.4)';fw='700';cursor='pointer';}
+    else if(isToday){bg='transparent';color='var(--teal)';border='var(--teal)';fw='700';cursor='pointer';}
+    else if(isPast){bg='transparent';color='rgba(106,138,170,0.3)';border='transparent';fw='400';cursor='default';}
+    else{bg='transparent';color='var(--white)';border='transparent';fw='400';cursor='pointer';}
+    const onclick=!isPast?`onclick="selectBkDate('${ds}')"`:''
+    cells.push(`<div ${onclick} style="aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:${fw};cursor:${cursor};background:${bg};color:${color};border:1.5px solid ${border};min-height:36px;user-select:none;-webkit-user-select:none">${d}</div>`);
+  }
+  el.innerHTML=cells.join('');
+}
+
+function bkCalNav(d){
+  bkCalMonth+=d;
+  if(bkCalMonth>11){bkCalMonth=0;bkCalYear++;}
+  if(bkCalMonth<0){bkCalMonth=11;bkCalYear--;}
+  buildBkCal();
+}
+
+function selectBkDate(ds){
+  bk.selectedDate=ds;
+  const rideDate=new Date(ds+'T12:00:00');
+  const now=new Date();
+  const daysOut=Math.ceil((rideDate-now)/(1000*60*60*24));
+  bk.when=daysOut>=7?'over':'under';
+  const dayName=DAYS_LONG[rideDate.getDay()];
+  const month=MONTHS[rideDate.getMonth()];
+  const day=rideDate.getDate();
+  const year=rideDate.getFullYear();
+  const showYear=year!==new Date().getFullYear();
+  const dateStr=`${dayName}, ${month} ${day}${showYear?', '+year:''}`;
+  const daysLabel=daysOut===0?'Today':daysOut===1?'Tomorrow':`${daysOut} days from now`;
+  const dispEl=document.getElementById('bkDateDisplay');
+  if(dispEl){
+    dispEl.innerHTML=`<div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--white);margin-bottom:3px">${dateStr}</div><div style="font-size:12px;color:var(--teal)">${daysLabel}</div>`;
+    dispEl.style.cssText='margin-top:12px;background:rgba(45,212,191,0.08);border-radius:var(--r2);padding:12px 14px;border:1px solid var(--border2)';
+  }
+  const depEl=document.getElementById('bkDepositAuto');
+  if(depEl){
+    depEl.style.display='block';
+    if(bk.when==='under'){
+      depEl.textContent='⚡ Under 1 week — deposit is $150';
+      depEl.style.cssText='display:block;margin-top:8px;font-size:12px;padding:7px 12px;border-radius:20px;font-weight:600;background:rgba(251,113,133,0.1);color:#fb7185';
+    } else {
+      depEl.textContent='✓ 1+ week out — deposit is $125';
+      depEl.style.cssText='display:block;margin-top:8px;font-size:12px;padding:7px 12px;border-radius:20px;font-weight:600;background:var(--gold3);color:var(--gold)';
+    }
+  }
+  buildBkCal();
+  calcQuote();
+}
+
+function setBK(field,val){
+  bk[field]=val;
+  // Update button styles
+  const maps={
+    type:{local:'bkLocal',tourist:'bkTourist'},
+    ridetype:{evening:'bkEvening',morning:'bkMorning'},
+    time:{'4pm':'bkT4pm','8pm':'bkT8pm',custom:'bkTcustom'},
+    when:{over:'bkD1week',under:'bkDunder'}
+  };
+  if(maps[field]){
+    Object.values(maps[field]).forEach(id=>{const el=document.getElementById(id);if(el)el.className='opt';});
+    const el=document.getElementById(maps[field][val]);if(el)el.className='opt sel';
+  }
+  // Show/hide tourist ride type card
+  if(field==='type'){
+    const rtCard=document.getElementById('bkRideTypeCard');
+    const timeCard=document.getElementById('bkTimeCard');
+    if(rtCard)rtCard.style.display=val==='tourist'?'block':'none';
+    if(timeCard)timeCard.style.display=val==='local'?'block':'none';
+    if(val==='tourist'){bk.ridetype=null;bk.time='flexible';}
+    else{bk.ridetype=null;}
+  }
+  // Show/hide custom time input
+  if(field==='time'){
+    const ct=document.getElementById('bkCustomTime');
+    if(ct)ct.style.display=val==='custom'?'block':'none';
+  }
+  calcQuote();
+}
+
+function adjGroup(delta){
+  bk.count=Math.max(1,Math.min(16,bk.count+delta));
+  document.getElementById('bkCount').textContent=bk.count;
+  document.getElementById('bkSlider').value=bk.count;
+  calcQuote();
+}
+
+function sliderGroup(val){
+  bk.count=parseInt(val);
+  document.getElementById('bkCount').textContent=bk.count;
+  calcQuote();
+}
+
+function calcPrice(){
+  const n=bk.count;
+  const isLocal=bk.type==='local';
+  const isMorning=bk.ridetype==='morning';
+  const baseRate=isLocal?45:(isMorning?75:65);
+  let subtotal,discount=0,label='';
+
+  if(isLocal){
+    if(n<=7){subtotal=350;label='Flat rate (7 or fewer)';}
+    else if(n>=10&&n<=12){subtotal=n*baseRate;discount=25;label='Group discount applied';}
+    else if(n>=13&&n<=14){subtotal=n*baseRate;discount=35;label='Group discount applied';}
+    else{subtotal=n*baseRate;label='Standard rate';}
+  } else {
+    if(n>=10&&n<=12){subtotal=n*baseRate;discount=20;label='Group discount applied';}
+    else if(n>=13&&n<=14){subtotal=n*baseRate;discount=30;label='Group discount applied';}
+    else{subtotal=n*baseRate;label='Standard rate';}
+  }
+  const total=subtotal-discount;
+  const deposit=bk.when==='under'?150:125;
+  const remaining=total-deposit;
+  return{subtotal,discount,total,deposit,remaining,baseRate,label,n};
+}
+
+function calcQuote(){
+  if(!bk.type)return;
+  const card=document.getElementById('bkQuoteCard');
+  const adjCard=document.getElementById('bkAdjCard');
+  if(!card)return;
+  const p=calcPrice();
+  card.style.display='block';
+  if(adjCard)adjCard.style.display='block';
+
+  const discountLine=p.discount>0?`<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--teal);margin-bottom:4px"><span>Group discount</span><span>−$${p.discount}</span></div>`:'';
+  const rateLine=p.n<=7&&bk.type==='local'?'':`<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px"><span>$${p.baseRate}/person × ${p.n}</span><span>$${p.subtotal}</span></div>`;
+
+  card.querySelector('#bkQuoteDisplay').innerHTML=`
+    <div style="margin-bottom:12px">
+      ${rateLine}
+      ${discountLine}
+      <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:700;color:var(--white);border-top:1px solid var(--border);padding-top:8px"><span>Total</span><span style="color:var(--gold)">$${p.total}</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div style="background:var(--navy3);border-radius:var(--r2);padding:10px;text-align:center;border:1px solid var(--border)">
+        <div style="font-size:18px;font-weight:800;color:var(--teal);font-family:'Syne',sans-serif">$${p.deposit}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px">Deposit to confirm</div>
+      </div>
+      <div style="background:var(--navy3);border-radius:var(--r2);padding:10px;text-align:center;border:1px solid var(--border)">
+        <div style="font-size:18px;font-weight:800;color:var(--white);font-family:'Syne',sans-serif">$${p.remaining}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px">Balance on the day</div>
+      </div>
+    </div>
+    ${p.label?`<div style="font-size:11px;color:var(--teal);margin-top:8px;padding:5px 10px;background:var(--teal3);border-radius:20px;display:inline-block">${p.label}</div>`:''}`;
+}
+
+async function genBookingQuote(){
+  if(!bk.type){alert('Select Local or Tourist first.');return;}
+  setLoading('bkOut','Writing your WhatsApp quote...');
+
+  const customerName=document.getElementById('bkCustomerName')?.value?.trim()||'';
+  const greeting=customerName?`Hey ${customerName}!`:'Hey!';
+  const p=calcPrice();
+  const isLocal=bk.type==='local';
+  const isMorning=bk.ridetype==='morning';
+  const timeText=bk.time==='4pm'?'4:00 PM':bk.time==='8pm'?'8:00 PM':bk.time==='custom'?(document.getElementById('bkCustomTime')?.value||'a time that works for you'):'flexible — we can work around your schedule';
+  const meetPoint=isMorning?'Woodes Rogers Walk by 700 Wines & Spirits (right near the cruise port)':'Goodman\'s Bay Parking Lot';
+  const routeInfo=isMorning?'Our morning tour takes you through downtown Nassau — Bahamas Rum Cake Factory, Queen\'s Staircase, Graycliff, John Watling\'s Distillery for free rum tastings, and the Arawak Cay Fish Fry. Back to the cruise port by 3:30 PM.'
+    :'We ride along Cable Beach — stops at Palm Tree Delights (food and bathrooms), Solis Garden Bar (liquor store right out front if you need to restock), and Bon Vivants in Sandyport.';
+
+  // Date display
+  let dateDisplay='TBD';
+  if(bk.selectedDate){
+    const rd=new Date(bk.selectedDate+'T12:00:00');
+    dateDisplay=DAYS_LONG[rd.getDay()]+', '+MONTHS[rd.getMonth()]+' '+rd.getDate();
+    const yr=rd.getFullYear();
+    if(yr!==new Date().getFullYear())dateDisplay+=', '+yr;
+  }
+
+  // Auto-detect deposit
+  const depositAmt=bk.when==='under'?150:125;
+  const depositReason=bk.when==='under'?'less than 1 week out':'more than 1 week out';
+
+  const context=`Customer name: ${customerName||'(use warm general greeting)'}
+Opening: "${greeting}"
+Type: ${isLocal?'Local':'Tourist'}
+Date: ${dateDisplay}
+Ride: ${isMorning?'Morning historical tour ($75/person)':'Evening/Afternoon ($65/person tourists, $45/person locals)'}
+Group: ${p.n} people
+Pricing: ${p.n<=7&&isLocal?'$350 flat rate':`$${p.baseRate}/person × ${p.n} = $${p.subtotal}${p.discount>0?` minus $${p.discount} group discount`:''} = $${p.total} total`}
+Deposit: $${depositAmt} (${depositReason})
+Balance on the day: $${p.remaining}
+Payment: Zelle, Venmo, PayPal${isLocal?', bank transfer, cash':''}
+Time: ${timeText}
+Meeting: ${meetPoint}
+Duration: 2–4 hours
+Included: cooler, cups, ice, host, driver, music, karaoke, Pedal Paradise Punch. BYO drinks.
+Route: ${routeInfo}`;
+
+  try{
+    const reply=await callClaude(`You are Blair, owner of Pedal Paradise Adventures — Nassau, Bahamas' party bike. Write a warm WhatsApp booking quote.
+
+${context}
+
+Message must:
+1. Start with the exact greeting provided above — use their name if given
+2. Feel personal and hospitable, like a friend who runs a business — not a template
+3. Confirm group size and ride type naturally
+4. State pricing clearly: total, deposit to confirm, balance on the day, how to pay
+5. Mention 2-3 included items naturally in a sentence
+6. Briefly mention the route/stops to build excitement
+7. Explain how to confirm (deposit locks the date — first come first served)
+8. Close warmly — make them excited to show up
+9. 1 emoji max — 🌴 or 🚴 — placed naturally
+10. No bullet points, no headers — just natural flowing sentences under 160 words
+
+Business: Pedal Paradise Adventures · 242-677-BIKE · 242-552-4199 · pedalparadiseadventures.com
+
+Return ONLY the WhatsApp message. No explanation.`,500);
+    setOutput('bkOut',reply);
+  }catch(e){setOutput('bkOut','Network error — check connection and try again.');}
+}
+
+function copyBkOut(){
+  const el=document.getElementById('bkOut');
+  if(!el||el.classList.contains('dim'))return;
+  navigator.clipboard.writeText(el.textContent).catch(()=>alert(el.textContent));
+}
+
+function resetBooking(){
+  bk.type=null;bk.ridetype=null;bk.count=8;bk.time=null;bk.when=null;bk.selectedDate=null;
+  const nameEl=document.getElementById('bkCustomerName');if(nameEl)nameEl.value='';
+  const dispEl=document.getElementById('bkDateDisplay');
+  if(dispEl){dispEl.textContent='No date selected — tap a date above';dispEl.style.background='var(--navy3)';dispEl.style.border='none';}
+  const depEl=document.getElementById('bkDepositAuto');if(depEl)depEl.style.display='none';
+  ['bkLocal','bkTourist','bkEvening','bkMorning','bkT4pm','bkT8pm','bkTcustom']
+    .forEach(id=>{const el=document.getElementById(id);if(el)el.className='opt';});
+  document.getElementById('bkCount').textContent='8';
+  document.getElementById('bkSlider').value='8';
+  document.getElementById('bkRideTypeCard').style.display='none';
+  document.getElementById('bkTimeCard').style.display='block';
+  document.getElementById('bkQuoteCard').style.display='none';
+  document.getElementById('bkAdjCard').style.display='none';
+  document.getElementById('bkCustomTime').style.display='none';
+  document.getElementById('bkOut').textContent='Your quote message will appear here. Fill in the details above first.';
+  document.getElementById('bkOut').className='outbox dim';
+}
+
+// ── CAPTIONS ──
+let cType=null,cPlat=null,capHistory=[];
+
+function setCType(t){
+  cType=t;
+  ['cDay','cNight','cDayVid','cNightVid','cLive'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.className='opt';
+  });
+  const map={dayphoto:'cDay',nightphoto:'cNight',dayvid:'cDayVid',nightvid:'cNightVid',live:'cLive'};
+  const el=document.getElementById(map[t]);if(el)el.className='opt sel';
+}
+
+function setCPlat(p){
+  cPlat=p;
+  ['cpIG','cpTK'].forEach(id=>{const el=document.getElementById(id);if(el)el.className='opt';});
+  const map={instagram:'cpIG',tiktok:'cpTK'};
+  const el=document.getElementById(map[p]);if(el)el.className='opt sel';
+}
+
+async function genCaption(){
+  if(!cType){alert('Select a content type first.');return;}
+  if(!cPlat){alert('Select a platform first.');return;}
+  const outEl=document.getElementById('capOut');
+  if(outEl){outEl.textContent='Writing your caption...';outEl.className='outbox dim';}
+  const isNight=cType==='nightphoto'||cType==='nightvid';
+  const isVideo=cType.includes('vid')||cType==='live';
+  const isTK=cPlat==='tiktok';
+  try{
+    const cap=await callClaude(`You write social media captions for Pedal Paradise Adventures — Nassau, Bahamas party bike experience (@pedalparadisebahamas).
+
+Top party bike brands write like this: Nashville Pedal Tavern — "Grab your crew and pedal with us!" Nashville Bar Bike — "The best way to party and tour downtown. Grab your crew and pedal with us!" Short. Direct. Occasion-focused. Real person energy.
+
+Content: ${cType==='live'?'Live moment on the bike right now':isVideo?'Video of guests on the party bike':'Photo of guests on the party bike'}
+Vibe: ${isNight?'Night ride — Nassau lit up, party energy, music, everyone vibing':'Day ride — Nassau sunshine, good energy, group having fun'}
+Platform: ${cPlat}
+Format: ${isTK?'1 short punchy sentence + 2-3 hashtags on new line':'2 short punchy sentences + 3-4 hashtags on new line'}
+
+Rules — all mandatory:
+- Occasion when natural: birthday crew, bachelorette, work outing, group of friends
+- Nassau or Bahamas once naturally — never forced
+- Casual local tone — like a Nassau business owner texting a friend
+- Zero marketing language, zero adjective lists, zero em dashes
+- 1 emoji max, never at the start of a sentence
+- NEVER start with: "Are you ready" / "Looking for fun" / "Picture this" / "Nassau is calling" / "Imagine" / "Step aboard"
+- NO booking CTA — added separately
+- Return ONLY the caption, nothing else`,220);
+    if(outEl){outEl.textContent=cap;outEl.className='outbox';}
+    window._lastCap=cap;
+  }catch(e){if(outEl){outEl.textContent='Network error — check your API key is set in the file and try again.';outEl.className='outbox dim';}}
+}
+
+function saveCaption(){
+  const el=document.getElementById('capOut');
+  if(!el||el.classList.contains('dim'))return;
+  const cap={text:el.textContent,type:cType,plat:cPlat,date:new Date().toLocaleDateString()};
+  capHistory.unshift(cap);
+  if(capHistory.length>10)capHistory=capHistory.slice(0,10);
+  renderHistory();
+  const btn=document.getElementById('saveCBtn');
+  if(btn){btn.textContent='Saved ✓';setTimeout(()=>btn.textContent='Save to history',1500);}
+}
+
+function renderHistory(){
+  const el=document.getElementById('capHistory');if(!el)return;
+  if(!capHistory.length){el.innerHTML='<div class="body" style="padding:8px 0">No captions saved yet.</div>';return;}
+  el.innerHTML=capHistory.map((c,i)=>`
+    <div class="hist-item">
+      <div class="hist-meta">${c.date} · ${c.type||'—'} · ${c.plat||'—'}</div>
+      <div class="hist-text">${c.text}</div>
+      <button class="btn btn-sm" style="margin-top:8px;width:auto" onclick="navigator.clipboard.writeText(capHistory[${i}].text+'\\n\\n'+CTA).catch(()=>alert(capHistory[${i}].text))">Copy</button>
+    </div>`).join('');
+}
+renderHistory();
+
+function copyCapCTA(){
+  const el=document.getElementById('capOut');
+  if(!el||el.classList.contains('dim'))return;
+  navigator.clipboard.writeText(el.textContent+'\n\n'+CTA).catch(()=>alert(el.textContent+'\n\n'+CTA));
+}
+
+// ── HASHTAGS ──
+let hPlat=null;
+function setHPlat(p){
+  hPlat=p;
+  ['hIG','hTK'].forEach(id=>{const el=document.getElementById(id);if(el)el.className='opt';});
+  const el=document.getElementById(p==='instagram'?'hIG':'hTK');if(el)el.className='opt sel';
+}
+
+async function genHashtags(){
+  const desc=document.getElementById('hashDesc').value.trim();
+  if(!desc){alert('Describe your post first.');return;}
+  if(!hPlat){alert('Select a platform first.');return;}
+  setLoading('hashOut','Finding best hashtags...');
+  try{
+    const tags=await callClaude(`Generate the best hashtags for a Pedal Paradise Adventures social media post. They are a party bike / pedal pub experience in Nassau, Bahamas (@pedalparadisebahamas).
+
+Post description: "${desc}"
+Platform: ${hPlat}
+
+Rules:
+- ${hPlat==='instagram'?'Give exactly 5 hashtags for Instagram. Mix: 1 brand hashtag, 1 Nassau/Bahamas location tag, 1 activity tag, 1 occasion tag, 1 trending entertainment/nightlife tag. All should have good but not oversaturated reach (50K-2M posts ideally).':'Give exactly 3-4 hashtags for TikTok. Choose hashtags that work as search terms people would actually type. Think "things to do in Nassau" style tags plus 1-2 niche party/fun tags.'}
+- Only include hashtags, one per line, with the # symbol
+- No explanations, no numbering, no extra text
+Return ONLY the hashtags, one per line.`,150);
+    setOutput('hashOut',tags);
+  }catch(e){setOutput('hashOut','Network error — try again.');}
+}
+
+// ── BIO ──
+let bPlat=null;
+function setBPlat(p){
+  bPlat=p;
+  ['bpIG','bpTK','bpFB'].forEach(id=>{const el=document.getElementById(id);if(el)el.className='opt';});
+  const map={instagram:'bpIG',tiktok:'bpTK',facebook:'bpFB'};
+  const el=document.getElementById(map[p]);if(el)el.className='opt sel';
+}
+
+async function genBio(){
+  const bio=document.getElementById('bioInput').value.trim();
+  if(!bio){alert('Paste your current bio first.');return;}
+  if(!bPlat){alert('Select a platform first.');return;}
+  setLoading('bioOut','Optimizing your bio...');
+  try{
+    const newBio=await callClaude(`Optimize this Instagram/social media bio for Pedal Paradise Adventures to convert more visitors into bookings.
+
+Business: Party bike / pedal pub experience in Nassau, Bahamas. $45/person for locals, $65 for tourists. Weekend rides at 4 PM and 8 PM. Also morning tourist tours at $75/person. Max 15 guests. Features: karaoke on board, complimentary Pedal Paradise Punch, cooler/cups/ice, host, driver, music. Book via WhatsApp or call 242-677-BIKE. Website: pedalparadiseadventures.com
+
+Current bio: "${bio}"
+Platform: ${bPlat}
+
+Rewrite rules:
+- ${bPlat==='instagram'?'Instagram allows ~150 characters. Use line breaks. Include a clear action-oriented hook, occasion tags (birthdays, bachelorette, groups), and a booking call to action. Keep the fun emojis but make every word earn its spot.':bPlat==='tiktok'?'TikTok bio is very short (~80 chars). Make it punchy. Focus on what makes them unique and drive to the link.':'Facebook bio can be longer. Focus on what the experience is, who it is for, and how to book.'}
+- Must include: what it is, where (Nassau), how to book
+- Make someone who lands on the page immediately want to book
+- Keep the personality and energy of the brand
+Return ONLY the new bio text. No explanation.`,250);
+    setOutput('bioOut',newBio);
+  }catch(e){setOutput('bioOut','Network error — try again.');}
+}
+
+// ── SCHEDULE ──
+function buildStrip(){
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const plan=[false,true,false,true,false,true,true];
+  const t=new Date().getDay();
+  const el=document.getElementById('wstrip');if(!el)return;
+  el.innerHTML=days.map((d,i)=>`<div class="wd"><div class="wdname">${d}</div><div class="wdcircle${i===t?' today':plan[i]?' plan':''}">${plan[i]||i===t?'●':''}</div></div>`).join('');
+}
+buildStrip();
+buildBkCal();
+
+const prepItems=['Pick Monday photo/video','Pick Wednesday video','Pick Friday post','Write 3 captions (use Captions tab)','Schedule Mon+Wed in Meta Business Suite','Keep Friday ready to post manually'];
+let prepDone=new Set();
+function buildPrep(){
+  const el=document.getElementById('prepList');if(!el)return;
+  el.innerHTML=prepItems.map((p,i)=>`
+    <div class="chk-item" onclick="togPrep(${i})">
+      <div class="chkbox${prepDone.has(i)?' done':''}">${prepDone.has(i)?'✓':''}</div>
+      <span class="chk-lbl${prepDone.has(i)?' done':''}">${p}</span>
+    </div>`).join('')+`<div style="font-size:12px;color:var(--muted);padding-top:8px">${prepDone.size}/6 done this Sunday</div>`;
+}
+function togPrep(i){prepDone.has(i)?prepDone.delete(i):prepDone.add(i);buildPrep();}
+buildPrep();
+
+// ── REACH ──
+function updR(){
+  const f=parseInt(document.getElementById('fs').value);
+  const p=parseInt(document.getElementById('ps').value);
+  const a=parseInt(document.getElementById('as').value);
+  document.getElementById('fv').textContent=f.toLocaleString();
+  document.getElementById('pv').textContent=p;
+  document.getElementById('av').textContent='$'+a;
+  document.getElementById('curF').textContent=f.toLocaleString();
+  const rp=f<1000?0.22:f<5000?0.18:f<10000?0.14:0.10;
+  const reach=Math.round(f*rp*Math.min(1.5,1+(p-3)*0.05));
+  const gr=Math.min(0.12,0.05+(p/14)*0.07);
+  const nf=Math.round(f*gr);
+  const pr=a>0?Math.round((a/50)*3500):0;
+  document.getElementById('pr1').textContent=reach.toLocaleString();
+  document.getElementById('pr2').textContent='+'+nf.toLocaleString();
+  document.getElementById('pr3').textContent=a>0?pr.toLocaleString():'—';
+  const f30=Math.round(f*(1+gr));
+  const f60=Math.round(f*Math.pow(1+gr,2));
+  const f90=Math.round(f*Math.pow(1+gr,3));
+  document.getElementById('p30').textContent='30d: '+f30.toLocaleString();
+  document.getElementById('p60').textContent='60d: '+f60.toLocaleString();
+  document.getElementById('p90').textContent='90d: '+f90.toLocaleString();
+  document.getElementById('b1').style.width=Math.round((f30/f90)*100)+'%';
+  document.getElementById('b2').style.width=Math.round((f60/f90)*100)+'%';
+  document.getElementById('b3').style.width='100%';
+}
+updR();
+
+// ── GOAL ──
+function updGoal(){
+  const s=parseFloat(document.getElementById('savedAmt').value)||0;
+  const pct=Math.min(100,Math.round((s/20000)*100));
+  document.getElementById('gbar').style.width=pct+'%';
+  document.getElementById('gPct').textContent=pct+'% saved — $'+s.toLocaleString();
+  const rem=20000-s;
+  if(s>=20000){document.getElementById('gMsg').textContent='🎉 Goal reached! Time to get that second bike.';}
+  else{const mo=Math.max(1,Math.ceil((new Date(2025,11,31)-new Date())/2629800000));document.getElementById('gMsg').textContent='$'+rem.toLocaleString()+' remaining. Save ~$'+Math.ceil(rem/mo).toLocaleString()+'/month to hit goal by year-end.';}
+}
+</script>
+</body>
+</html>
